@@ -79,11 +79,11 @@ public  class BusLine implements BusLineInterface {
 			return segments;
 		}
 		/**
-		 * Dodaje LineSegment do listy segmentów obiektu linii autobusowej
-		 * Brak weryfikacji skutków dodania kolejnego segmentu
-		 * Odpowiedzialnoœæ za poprawne dodanie segmentów spoczywa na u¿ytkowniku
-		 * Dopuszczalne tylko segmenty (odcinki), które s¹ poziome, pionowe i skoœne (co 45 stopni)
-		 * Skoœne segmenty, które nie spe³niaj¹ warunków nie by³y uwzglêdniane
+		 * Dodaje LineSegment do listy segmentï¿½w obiektu linii autobusowej
+		 * Brak weryfikacji skutkï¿½w dodania kolejnego segmentu
+		 * Odpowiedzialnoï¿½ï¿½ za poprawne dodanie segmentï¿½w spoczywa na uï¿½ytkowniku
+		 * Dopuszczalne tylko segmenty (odcinki), ktï¿½re sï¿½ poziome, pionowe i skoï¿½ne (co 45 stopni)
+		 * Skoï¿½ne segmenty, ktï¿½re nie speï¿½niajï¿½ warunkï¿½w nie byï¿½y uwzglï¿½dniane
 		 * 
 		 * @return
 		 */
@@ -94,9 +94,9 @@ public  class BusLine implements BusLineInterface {
 			segments.add(new LineSegment(new Position2D(x1,y1), new Position2D(x2,y2)));
 		}
 		/**
-		 * Metoda przygotowuje listê punktów na podstawie przypisanych segmentów
+		 * Metoda przygotowuje listï¿½ punktï¿½w na podstawie przypisanych segmentï¿½w
 		 * 
-		 * @return Zwraca listê z unikalnymi punktami linii autobusowej
+		 * @return Zwraca listï¿½ z unikalnymi punktami linii autobusowej
 		 */
 		private List<Position> getPositionList(){
 			positionList = new LinkedList<Position>();
@@ -113,11 +113,11 @@ public  class BusLine implements BusLineInterface {
 	        	int posCol = pos1Col;
 	        	int posRow = pos1Row;
 	        	Position pos;
-	        	//UWAGA: zapewnienie segmentu trasy, którego odcinek na 2 wymiarowej p³aszczynie 
-	        	//jest pod k¹tem innym ni¿ wielokrotnoœæ 45stopnii mo¿e spowodowaæ tutaj nieskoñczon¹ pêtlê!!! 
+	        	//UWAGA: zapewnienie segmentu trasy, ktï¿½rego odcinek na 2 wymiarowej pï¿½aszczynie 
+	        	//jest pod kï¿½tem innym niï¿½ wielokrotnoï¿½ï¿½ 45stopnii moï¿½e spowodowaï¿½ tutaj nieskoï¿½czonï¿½ pï¿½tlï¿½!!! 
 	        	do {
 	        		pos = new Position2D(posCol,posRow);
-	        		//Sprawdzanie, czy punkt o takich samych wspó³rzêdnych jest ju¿ na liœcie
+	        		//Sprawdzanie, czy punkt o takich samych wspï¿½rzï¿½dnych jest juï¿½ na liï¿½cie
 	        		boolean posDuplicated=false;
 	        		int k=0;
 	        		while(k!=positionList.size() && !posDuplicated){
@@ -138,15 +138,15 @@ public  class BusLine implements BusLineInterface {
 	}
 	//Mapa z obiektami linii
 	private Map<String, CBusLine> busLines = new HashMap<String, CBusLine>();
-	//Mapy z wynikami (skrzy¿owaniami)
+	//Mapy z wynikami (skrzyï¿½owaniami)
 	private Map<String, List<Position>> lines;
 	private Map<String, List<Position>> intersectionPositions;
 	private Map<String, List<String>> intersectionsWithLines;
 	private Map<BusLineInterface.LinesPair, Set<Position>> intersectionOfLinesPair;
 	
 	/**
-	 * Metoda dodaje liniê autobusow¹ o podanej nazwie. Wraz z nazw¹ linii
-	 * przekazywane s¹ informacje o pierwszym i ostatnim punkcie na trasie.
+	 * Metoda dodaje liniï¿½ autobusowï¿½ o podanej nazwie. Wraz z nazwï¿½ linii
+	 * przekazywane sï¿½ informacje o pierwszym i ostatnim punkcie na trasie.
 	 * 
 	 * @param busLineName nazwa linii
 	 * @param firstPoint  pierwszy punkt na trasie
@@ -162,8 +162,8 @@ public  class BusLine implements BusLineInterface {
 	}
 	/**
 	 * Metoda dodaje odcinek lineSegment do linii autobusowej o nazwie busLineName.
-	 * Odcinki nie musz¹ byæ dodawane w jakiejkolwiek kolejnoœci. Mo¿na z nich
-	 * utworzyæ ca³¹ trasê poprzez uwzglêdnienie po³¹czenia punktów krañcowych.
+	 * Odcinki nie muszï¿½ byï¿½ dodawane w jakiejkolwiek kolejnoï¿½ci. Moï¿½na z nich
+	 * utworzyï¿½ caï¿½ï¿½ trasï¿½ poprzez uwzglï¿½dnienie poï¿½ï¿½czenia punktï¿½w kraï¿½cowych.
 	 * 
 	 * @param busLineName nazwa linii autobusowej
 	 * @param lineSegment odcinek trasy
@@ -178,16 +178,16 @@ public  class BusLine implements BusLineInterface {
 	}
 
 	/**
-	 * Metoda zleca rozpoczêcie poszukiwania skrzy¿owañ
+	 * Metoda zleca rozpoczï¿½cie poszukiwania skrzyï¿½owaï¿½
 	 */
 	@Override
 	public void findIntersections() {
 		lines = new HashMap<String, List<Position>>();
-		//Pozyskanie mapy z listami punktów, mapa mo¿e jeszcze zawieraæ linie, które nie maj¹ skrzy¿owañ
+		//Pozyskanie mapy z listami punktï¿½w, mapa moï¿½e jeszcze zawieraï¿½ linie, ktï¿½re nie majï¿½ skrzyï¿½owaï¿½
 		for (Map.Entry<String, CBusLine> buslinesEntry : busLines.entrySet()) {
 			lines.put(buslinesEntry.getKey(), buslinesEntry.getValue().getPositionList());
 	    }
-		//Inicjalizacja pozosta³ych map
+		//Inicjalizacja pozostaï¿½ych map
 		intersectionPositions = new HashMap<String, List<Position>>();
 		intersectionsWithLines = new HashMap<String, List<String>>();
 		intersectionOfLinesPair = new HashMap<BusLineInterface.LinesPair, Set<Position>>();
@@ -195,7 +195,7 @@ public  class BusLine implements BusLineInterface {
 		//Dwa iteratory po obiektach mapy do
 		Iterator<Map.Entry<String, List<Position>>> linesIterator1 = lines.entrySet().iterator();
 		Iterator<Map.Entry<String, List<Position>>> linesIterator2;
-		int mapIterator=0;	//Ustawiæ na 1 aby nie sprawdzaæ skrzy¿owañ w³asnych
+		int mapIterator=0;	//Ustawiï¿½ na 1 aby nie sprawdzaï¿½ skrzyï¿½owaï¿½ wï¿½asnych
 	    while (linesIterator1.hasNext()) {
 	    	Map.Entry<String, List<Position>> linesEntry1 = linesIterator1.next();
     		String lineName1 = linesEntry1.getKey();
@@ -214,37 +214,37 @@ public  class BusLine implements BusLineInterface {
 	    		LinesPair linePair = new LinesPair(lineName1, lineName2);
 	    		//Sprawdzana para linii autobusowych
 	    		List<Position> intersections = findIntersectionPositions(line1,line2);
-	    		//Dodanie do mapy Nazwa Linii::Lista pozycji skrzy¿owañ  znalezione nowe skrzy¿owania dla obu linii
+	    		//Dodanie do mapy Nazwa Linii::Lista pozycji skrzyï¿½owaï¿½  znalezione nowe skrzyï¿½owania dla obu linii
         		addIntersectionPositions(lineName1, intersections);
         		addIntersectionPositions(lineName2, intersections);
         		if(intersections.size()>0) {
-        			//Dodanie do mapy Para Linii::Set Pozycji skrzy¿owañ
+        			//Dodanie do mapy Para Linii::Set Pozycji skrzyï¿½owaï¿½
             		addIntersectionOfLinesPair(linePair, intersections);
-            		//Dodanie do mapy Nazwa Linii::Lista Nazw Linii nazw linii, z którymi s¹ skrzy¿owania
+            		//Dodanie do mapy Nazwa Linii::Lista Nazw Linii nazw linii, z ktï¿½rymi sï¿½ skrzyï¿½owania
             		addIntersectionsWithLines(lineName1, lineName2);
             		addIntersectionsWithLines(lineName2, lineName1);
         		}
 	    	}
 	    }
-	    //Usuniêcie linii, które nie maj¹ ¿adnych skrzy¿owañ
+	    //Usuniï¿½cie linii, ktï¿½re nie majï¿½ ï¿½adnych skrzyï¿½owaï¿½
 	    deleteLinesWithNoIntersection();
-	    //Usuniêcie duplikatów z listy skrzy¿owañ
+	    //Usuniï¿½cie duplikatï¿½w z listy skrzyï¿½owaï¿½
 	    deleteReplicasIntersection();
 	}
 	/**
-	 * Metoda poszukuje pozycji skrzy¿owañ na przekazanych listach pozycji dwóch linii autobusowych
+	 * Metoda poszukuje pozycji skrzyï¿½owaï¿½ na przekazanych listach pozycji dwï¿½ch linii autobusowych
 	 * 
-	 * @return Lista z pozycjami uznanymi za skrzy¿owania
+	 * @return Lista z pozycjami uznanymi za skrzyï¿½owania
 	 */
 	private List<Position> findIntersectionPositions(List<Position> line1,List<Position> line2){
 		List<Position> intersections = new LinkedList<Position>();
-		//Poszukiwanie punktów wspólnych
+		//Poszukiwanie punktï¿½w wspï¿½lnych
 		for(int i=0;i<line1.size();i++){
 			for(int j=0;j<line2.size();j++){
 				Position pos1 = line1.get(i);
 				Position pos2 = line2.get(j);
 				if(pos1.equals(pos2)) {
-					//znaleziono takie same punkty w obu liniach, sprawdzanie warunku skrzy¿owania pod k¹tem prostym
+					//znaleziono takie same punkty w obu liniach, sprawdzanie warunku skrzyï¿½owania pod kï¿½tem prostym
 					if(checkIntersections(line1,line2,pos1)) {
 						if(!intersections.contains(pos1)) {
 							intersections.add(pos1);
@@ -257,23 +257,23 @@ public  class BusLine implements BusLineInterface {
 	}
 	
 	/**
-	 * Sprawdza czy na przekazanej liœcie istnieje obiekt Position o tych samych koordynatach
+	 * Sprawdza czy na przekazanej liï¿½cie istnieje obiekt Position o tych samych koordynatach
 	 * 
-	 * @return true jeœli znaleziono taki sam obiekt, false jeœli nie znaleziono
+	 * @return true jeï¿½li znaleziono taki sam obiekt, false jeï¿½li nie znaleziono
 	 */
 	private boolean checkIfPositionInList(Position pos,List<Position> list) {
 		for(int i=0;i<list.size();i++){
 			if(list.get(i).equals(pos)) {
-				//znaleziono tak¹ sam¹ pozycjê
+				//znaleziono takï¿½ samï¿½ pozycjï¿½
 				return true;
 			}
         }
 		return false;
 	}
 	/**
-	 * Sprawdza czy na przekazanych liniach istnieje skrzy¿owanie w podanym punkcie
+	 * Sprawdza czy na przekazanych liniach istnieje skrzyï¿½owanie w podanym punkcie
 	 * 
-	 * @return true jeœli warunki skrzy¿owania spe³nione, false jeœli punkt wspólny nie spe³nia warunków bycia skrzy¿owaniem
+	 * @return true jeï¿½li warunki skrzyï¿½owania speï¿½nione, false jeï¿½li punkt wspï¿½lny nie speï¿½nia warunkï¿½w bycia skrzyï¿½owaniem
 	 */
 	private boolean checkIntersections(List<Position> line1,List<Position> line2, Position pos) {
 		int posCol = pos.getCol();
@@ -284,7 +284,7 @@ public  class BusLine implements BusLineInterface {
 						&& checkIfPositionInList(new Position2D(posCol-i,posRow-j),line1)
 						&& checkIfPositionInList(new Position2D(posCol+j,posRow-i),line2)
 						&& checkIfPositionInList(new Position2D(posCol-j,posRow+i),line2)) {
-					//znaleziono skrzy¿owanie
+					//znaleziono skrzyï¿½owanie
 					return true;
 				}
 			}
@@ -293,9 +293,9 @@ public  class BusLine implements BusLineInterface {
 	}
 
 	/**
-	 * Metoda zwraca mapê, której kluczem jest nazwa linii autobusowej zaœ wartoœci¹
-	 * lista po³o¿eñ wszystkich punktów nale¿¹cych do danej linii. Mapa nie zawiera
-	 * wartoœci kluczy nazw linii, które nie maj¹ ¿adnego skrzy¿owania.
+	 * Metoda zwraca mapï¿½, ktï¿½rej kluczem jest nazwa linii autobusowej zaï¿½ wartoï¿½ciï¿½
+	 * lista poï¿½oï¿½eï¿½ wszystkich punktï¿½w naleï¿½ï¿½cych do danej linii. Mapa nie zawiera
+	 * wartoï¿½ci kluczy nazw linii, ktï¿½re nie majï¿½ ï¿½adnego skrzyï¿½owania.
 	 * 
 	 * @return mapa z przebiegiem tras linii autobusowych
 	 */
@@ -305,11 +305,11 @@ public  class BusLine implements BusLineInterface {
 	}
 
 	/**
-	 * Metoda zwraca mape, której kluczem jest nazwa linii autobusowej a wartoœci¹
-	 * lista kolejnych skrzy¿owañ na trasie linii. Mapa nie zawiera wartoœci kluczy
-	 * nazw linii, które nie maj¹ ¿adnego skrzy¿owania.
+	 * Metoda zwraca mape, ktï¿½rej kluczem jest nazwa linii autobusowej a wartoï¿½ciï¿½
+	 * lista kolejnych skrzyï¿½owaï¿½ na trasie linii. Mapa nie zawiera wartoï¿½ci kluczy
+	 * nazw linii, ktï¿½re nie majï¿½ ï¿½adnego skrzyï¿½owania.
 	 * 
-	 * @return mapa skrzy¿owañ dla poszczególnych linii.
+	 * @return mapa skrzyï¿½owaï¿½ dla poszczegï¿½lnych linii.
 	 */
 	@Override
 	public Map<String, List<Position>> getIntersectionPositions(){
@@ -317,11 +317,11 @@ public  class BusLine implements BusLineInterface {
 	}
 
 	/**
-	 * Metoda zwraca mapê, której kluczem jest nazwa linii autobusowej a waroœci¹
-	 * lista nazw kolejnych linii, z którymi linia ta ma skrzy¿owania. Zbiór kluczy
-	 * nie zawiera linii, które nie maj¹ skrzy¿owania.
+	 * Metoda zwraca mapï¿½, ktï¿½rej kluczem jest nazwa linii autobusowej a waroï¿½ciï¿½
+	 * lista nazw kolejnych linii, z ktï¿½rymi linia ta ma skrzyï¿½owania. Zbiï¿½r kluczy
+	 * nie zawiera linii, ktï¿½re nie majï¿½ skrzyï¿½owania.
 	 * 
-	 * @return mapa skrzy¿owañ pomiêdzy liniami
+	 * @return mapa skrzyï¿½owaï¿½ pomiï¿½dzy liniami
 	 */
 	@Override
 	public Map<String, List<String>> getIntersectionsWithLines(){
@@ -329,11 +329,11 @@ public  class BusLine implements BusLineInterface {
 	}
 
 	/**
-	 * Metoda zwraca mapê, której kluczem jest para nazw linii a wartoœci¹ zbiór
-	 * po³o¿eñ, w których para linii ma skrzy¿owania. Je¿eli linie nie maj¹ ¿adnego
-	 * skrzy¿owania, to mapa zawiera pusty zbiór pozycji skrzy¿owañ
+	 * Metoda zwraca mapï¿½, ktï¿½rej kluczem jest para nazw linii a wartoï¿½ciï¿½ zbiï¿½r
+	 * poï¿½oï¿½eï¿½, w ktï¿½rych para linii ma skrzyï¿½owania. Jeï¿½eli linie nie majï¿½ ï¿½adnego
+	 * skrzyï¿½owania, to mapa zawiera pusty zbiï¿½r pozycji skrzyï¿½owaï¿½
 	 * 
-	 * @return mapa skrzy¿owañ dla par linii autobusowych
+	 * @return mapa skrzyï¿½owaï¿½ dla par linii autobusowych
 	 */
 	@Override
 	public Map<BusLineInterface.LinesPair, Set<Position>> getIntersectionOfLinesPair(){
@@ -341,17 +341,17 @@ public  class BusLine implements BusLineInterface {
 	}
 	
 	/**
-	 * Metoda dodaje do mapy linii pozycje skrzy¿owañ
+	 * Metoda dodaje do mapy linii pozycje skrzyï¿½owaï¿½
 	 * 
 	 * @return
 	 */
 	private void addIntersectionPositions(String lineName,List<Position> intersections){
 		List<Position> _intersections = intersectionPositions.get(lineName);
-		if(_intersections==null) {	//Brak listy z skrzy¿owaniami dla danej linii
+		if(_intersections==null) {	//Brak listy z skrzyï¿½owaniami dla danej linii
 			intersectionPositions.put(lineName,intersections);
 		} else {
 			for(Position pos : intersections) {
-	            if(!_intersections.contains(pos));	//sprawdzenie, czy lista nie zawiera ju¿ takiej pozycji
+	            if(!_intersections.contains(pos));	//sprawdzenie, czy lista nie zawiera juï¿½ takiej pozycji
 	            	_intersections.add(pos);
 			}
 			intersectionPositions.replace(lineName,_intersections);
@@ -359,9 +359,9 @@ public  class BusLine implements BusLineInterface {
 	}
 
 	/**
-	 * Metoda dodaje aktualizuje mapê o nazwê linii do listy linii, z którymi ma skrzy¿owanie linia klucza
+	 * Metoda dodaje aktualizuje mapï¿½ o nazwï¿½ linii do listy linii, z ktï¿½rymi ma skrzyï¿½owanie linia klucza
 	 * 
-	 * @return mapa skrzy¿owañ pomiêdzy liniami
+	 * @return mapa skrzyï¿½owaï¿½ pomiï¿½dzy liniami
 	 */
 	private void addIntersectionsWithLines(String lineName1, String lineName2){
 		List<String> _intersectionsWithLine1 = intersectionsWithLines.get(lineName1);
@@ -369,8 +369,8 @@ public  class BusLine implements BusLineInterface {
 			_intersectionsWithLine1= new LinkedList<String>();
 			_intersectionsWithLine1.add(lineName2);
 			intersectionsWithLines.put(lineName1,_intersectionsWithLine1);
-		} else {	//dodanie do istniej¹cej listy kolejnego elementu
-	        if(!_intersectionsWithLine1.contains(lineName2)) {	//sprawdzenie, czy nie ma ju¿ takiej linii na liœcie
+		} else {	//dodanie do istniejï¿½cej listy kolejnego elementu
+	        if(!_intersectionsWithLine1.contains(lineName2)) {	//sprawdzenie, czy nie ma juï¿½ takiej linii na liï¿½cie
 	        	_intersectionsWithLine1.add(lineName2);
 	        	intersectionsWithLines.replace(lineName1,_intersectionsWithLine1);
 	        }
@@ -378,7 +378,7 @@ public  class BusLine implements BusLineInterface {
 	}
 
 	/**
-	 * Metoda dodaje pozycje skrzy¿owañ dla pary linii
+	 * Metoda dodaje pozycje skrzyï¿½owaï¿½ dla pary linii
 	 * 
 	 * @return
 	 */
@@ -387,7 +387,7 @@ public  class BusLine implements BusLineInterface {
 	}
 	
 	/**
-	 * Metoda usuwa z mapy lines linie, które nie maj¹ ¿adnych skrzy¿owañ
+	 * Metoda usuwa z mapy lines linie, ktï¿½re nie majï¿½ ï¿½adnych skrzyï¿½owaï¿½
 	 * 
 	 * @return
 	 */
