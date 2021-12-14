@@ -236,12 +236,12 @@ class BusLine implements BusLineInterface {
 					LinesPair linePair = new LinesPair(lineName1, lineName2);
 					addIntersectionOfLinesPair(linePair);
 					for (Position pos2 : line2) {
-						if(pos1.equals(pos2)) {
+						if (pos1.equals(pos2)) {
 							if (checkIntersections(line1, line2, pos1)) {
-									addIntersectionPosition(lineName1, pos1);
-									addIntersectionsWithLines(lineName1, lineName2);
-									addIntersectionOfLinesPair(linePair, pos1);
-									break;
+								addIntersectionPosition(lineName1, pos1);
+								addIntersectionsWithLines(lineName1, lineName2);
+								addIntersectionOfLinesPair(linePair, pos1);
+								break;
 							}
 						}
 					}
@@ -279,15 +279,26 @@ class BusLine implements BusLineInterface {
 	private boolean checkIntersections(List<Position> line1, List<Position> line2, Position pos) {
 		int posCol = pos.getCol();
 		int posRow = pos.getRow();
-		for (int i = 0; i <= 1; i++) {
-			for (int j = 0; j <= 1; j++) {
-				// warunek na skrzyzowanie opisane w tresci zadania
-				if ((i != 0 || j != 0) && checkIfPositionInList(new Position2D(posCol + i, posRow + j), line1)
-						&& checkIfPositionInList(new Position2D(posCol - i, posRow - j), line1)
-						&& checkIfPositionInList(new Position2D(posCol + j, posRow - i), line2)
-						&& checkIfPositionInList(new Position2D(posCol - j, posRow + i), line2)) {
-					// znaleziono skrzyzowanie
-					return true;
+
+		int lineLength1 = line1.size();
+		int lineLength2 = line2.size();
+
+		for (int k = 0; k < lineLength1 - 2; k++) {
+			for (int l = 0; l < lineLength2 - 2; l++) {
+				if (pos.equals(line1.get(k + 1)) && pos.equals(line2.get(l + 1)) && !(line1.equals(line2) && k == l)) {
+					Position pos1_1 = line1.get(k);
+					Position pos1_2 = line1.get(k + 2);
+					Position pos2_1 = line2.get(l);
+					Position pos2_2 = line2.get(l + 2);
+
+					int diff1_col = Math.abs(pos1_1.getCol() - pos1_2.getCol());
+					int diff1_row = Math.abs(pos1_1.getRow() - pos1_2.getRow());
+					int diff2_col = Math.abs(pos2_1.getCol() - pos2_2.getCol());
+					int diff2_row = Math.abs(pos2_1.getRow() - pos2_2.getRow());
+					
+					if (diff1_col  == diff2_row && diff1_row  == diff2_col) {
+						return true;
+					}
 				}
 			}
 		}
@@ -372,10 +383,10 @@ class BusLine implements BusLineInterface {
 		if (_intersectionsWithLine1 == null) { // Brak listy z nazwami linii
 			_intersectionsWithLine1 = new LinkedList<String>();
 			_intersectionsWithLine1.add(lineName2);
-			intersectionsWithLines.put(lineName1,_intersectionsWithLine1);
+			intersectionsWithLines.put(lineName1, _intersectionsWithLine1);
 		} else { // dodanie do istniejacej listy kolejnego elementu
 			_intersectionsWithLine1.add(lineName2);
-			intersectionsWithLines.replace(lineName1,_intersectionsWithLine1);
+			intersectionsWithLines.replace(lineName1, _intersectionsWithLine1);
 		}
 	}
 
@@ -385,17 +396,18 @@ class BusLine implements BusLineInterface {
 	 * @return
 	 */
 	private void addIntersectionOfLinesPair(LinesPair linePair, Position pos) {
-		var set=intersectionOfLinesPair.get(linePair);
-		if(set==null || set.isEmpty()) {
-			set=new HashSet<>();
+		var set = intersectionOfLinesPair.get(linePair);
+		if (set == null || set.isEmpty()) {
+			set = new HashSet<>();
 		}
 		set.add(pos);
 		intersectionOfLinesPair.put(linePair, set);
 	}
+
 	private void addIntersectionOfLinesPair(LinesPair linePair) {
-		var set=intersectionOfLinesPair.get(linePair);
-		if(set==null || set.isEmpty()) {
-			set=new HashSet<>();
+		var set = intersectionOfLinesPair.get(linePair);
+		if (set == null || set.isEmpty()) {
+			set = new HashSet<>();
 		}
 		intersectionOfLinesPair.put(linePair, set);
 	}
@@ -410,7 +422,8 @@ class BusLine implements BusLineInterface {
 		List<String> toDelete = new LinkedList<String>();
 		while (iterator.hasNext()) {
 			Map.Entry<String, List<Position>> entry = iterator.next();
-			if (intersectionPositions.get(entry.getKey())==null || intersectionPositions.get(entry.getKey()).isEmpty()) {
+			if (intersectionPositions.get(entry.getKey()) == null
+					|| intersectionPositions.get(entry.getKey()).isEmpty()) {
 				toDelete.add(entry.getKey());
 			}
 		}
@@ -419,5 +432,5 @@ class BusLine implements BusLineInterface {
 			intersectionPositions.remove(keyToDelete);
 		}
 	}
-	
+
 }
