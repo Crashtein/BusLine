@@ -2,7 +2,6 @@ package busLineTester;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,17 +19,17 @@ class BusLine implements BusLineInterface {
 			this.firstLineName = firstLineName;
 			this.secondLineName = secondLineName;
 		}
-
+		
 		@Override
 		public String getFirstLineName() {
 			return firstLineName;
 		}
-
+		
 		@Override
 		public String getSecondLineName() {
 			return secondLineName;
 		}
-
+		
 		@Override
 		public boolean equals(Object obj) {
 			if (this == obj)
@@ -59,7 +58,7 @@ class BusLine implements BusLineInterface {
 		private final String busLineName;
 		private final Position firstPoint;
 		private final Position lastPoint;
-		private List<LineSegment> segments = new LinkedList<LineSegment>();
+		private List<LineSegment> segments = new LinkedList<>();
 		private List<Position> positionList;
 
 		CBusLine(String busLineName, Position firstPoint, Position lastPoint) {
@@ -108,7 +107,7 @@ class BusLine implements BusLineInterface {
 		 */
 		private List<Position> getPositionList() {
 			sortSegments();
-			positionList = new LinkedList<Position>();
+			positionList = new LinkedList<>();
 			positionList.add(firstPoint);
 			for (int i = 0; i < segments.size(); i++) {
 				Position pos1 = segments.get(i).getFirstPosition();
@@ -163,9 +162,7 @@ class BusLine implements BusLineInterface {
 		}
 	}
 
-	// Mapa z obiektami linii
-	private Map<String, CBusLine> busLines = new HashMap<String, CBusLine>();
-	// Mapy z wynikami (skrzyzowaniami)
+	private Map<String, CBusLine> busLines = new HashMap<>();
 	private Map<String, List<Position>> lines;
 	private Map<String, List<Position>> intersectionPositions;
 	private Map<String, List<String>> intersectionsWithLines;
@@ -218,11 +215,6 @@ class BusLine implements BusLineInterface {
 		for (String name : names) {
 			lines.put(name, busLines.get(name).getPositionList());
 		}
-//		Set<String> namesSet = busLines.keySet();
-//		List<String> names = new ArrayList<>(namesSet);
-//		for (int i=names.size()-1;i>=0;i--) {
-//			lines.put(names.get(i), busLines.get(names.get(i)).getPositionList());
-//		}
 		// Inicjalizacja pozostalych map
 		intersectionPositions = new HashMap<String, List<Position>>();
 		intersectionsWithLines = new HashMap<String, List<String>>();
@@ -250,24 +242,6 @@ class BusLine implements BusLineInterface {
 		}
 		// Usuniecie linii, ktore nie maja zadnych skrzyzowan
 		deleteLinesWithNoIntersection();
-		// Usuniucie duplikataw z listy skrzyzowan
-		// deleteReplicasIntersection();
-	}
-
-	/**
-	 * Sprawdza czy na przekazanej liscie istnieje obiekt Position o tych samych
-	 * koordynatach
-	 * 
-	 * @return true jesli znaleziono taki sam obiekt, false jezli nie znaleziono
-	 */
-	private boolean checkIfPositionInList(Position pos, List<Position> list) {
-		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).equals(pos)) {
-				// znaleziono taka sama pozycje
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/**
@@ -277,12 +251,8 @@ class BusLine implements BusLineInterface {
 	 *         nie spelnia warunkow bycia skrzyzowaniem
 	 */
 	private boolean checkIntersections(List<Position> line1, List<Position> line2, Position pos) {
-		int posCol = pos.getCol();
-		int posRow = pos.getRow();
-
 		int lineLength1 = line1.size();
 		int lineLength2 = line2.size();
-
 		for (int k = 0; k < lineLength1 - 2; k++) {
 			for (int l = 0; l < lineLength2 - 2; l++) {
 				if (pos.equals(line1.get(k + 1)) && pos.equals(line2.get(l + 1)) && !(line1.equals(line2) && k == l)) {
@@ -290,12 +260,10 @@ class BusLine implements BusLineInterface {
 					Position pos1_2 = line1.get(k + 2);
 					Position pos2_1 = line2.get(l);
 					Position pos2_2 = line2.get(l + 2);
-
 					int diff1_col = Math.abs(pos1_1.getCol() - pos1_2.getCol());
 					int diff1_row = Math.abs(pos1_1.getRow() - pos1_2.getRow());
 					int diff2_col = Math.abs(pos2_1.getCol() - pos2_2.getCol());
 					int diff2_row = Math.abs(pos2_1.getRow() - pos2_2.getRow());
-					
 					if (diff1_col  == diff2_row && diff1_row  == diff2_col) {
 						return true;
 					}
