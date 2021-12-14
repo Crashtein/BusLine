@@ -9,19 +9,21 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Map;
 
-public class CBusLineCompany implements BusLineInterface {
-	public class CLinesPair implements LinesPair {
+public  class BusLine implements BusLineInterface {
+	public static class LinesPair implements BusLineInterface.LinesPair {
 		private final String firstLineName;
 		private final String secondLineName;
 		
-		public CLinesPair(String firstLineName, String secondLineName) {
-			if(firstLineName.compareTo(secondLineName)<0) {
-				this.firstLineName = firstLineName;
-				this.secondLineName = secondLineName;
-			} else {
-				this.firstLineName = secondLineName;
-				this.secondLineName = firstLineName;
-			}
+		public LinesPair(String firstLineName, String secondLineName) {
+//			if(firstLineName.compareTo(secondLineName)<0) {
+//				this.firstLineName = firstLineName;
+//				this.secondLineName = secondLineName;
+//			} else {
+//				this.firstLineName = secondLineName;
+//				this.secondLineName = firstLineName;
+//			}
+			this.firstLineName = firstLineName;
+			this.secondLineName = secondLineName;
 		}
 		
 		@Override
@@ -40,7 +42,7 @@ public class CBusLineCompany implements BusLineInterface {
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			CLinesPair other = (CLinesPair) obj;
+			LinesPair other = (LinesPair) obj;
 			return (firstLineName == other.firstLineName && secondLineName == other.secondLineName);
 		}
 		@Override
@@ -209,7 +211,7 @@ public class CBusLineCompany implements BusLineInterface {
 	    		
 	    		List<Position> line1=linesEntry1.getValue();
 	    		List<Position> line2=linesEntry2.getValue();
-	    		CLinesPair linePair = new CLinesPair(lineName1, lineName2);
+	    		LinesPair linePair = new LinesPair(lineName1, lineName2);
 	    		//Sprawdzana para linii autobusowych
 	    		List<Position> intersections = findIntersectionPositions(line1,line2);
 	    		//Dodanie do mapy Nazwa Linii::Lista pozycji skrzy¿owañ  znalezione nowe skrzy¿owania dla obu linii
@@ -334,7 +336,7 @@ public class CBusLineCompany implements BusLineInterface {
 	 * @return mapa skrzy¿owañ dla par linii autobusowych
 	 */
 	@Override
-	public Map<LinesPair, Set<Position>> getIntersectionOfLinesPair(){
+	public Map<BusLineInterface.LinesPair, Set<Position>> getIntersectionOfLinesPair(){
 		return intersectionOfLinesPair;
 	}
 	
@@ -380,7 +382,7 @@ public class CBusLineCompany implements BusLineInterface {
 	 * 
 	 * @return
 	 */
-	private void addIntersectionOfLinesPair(CLinesPair linePair,List<Position> intersections){
+	private void addIntersectionOfLinesPair(LinesPair linePair,List<Position> intersections){
 		intersectionOfLinesPair.put(linePair, new HashSet<>(intersections));
 	}
 	
