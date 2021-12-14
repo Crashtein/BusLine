@@ -76,7 +76,8 @@ public class busLineTester {
                 new Position2D(5, 2),
                 new Position2D(4, 2)
         ));
-        System.out.println(expLines==lines);
+        System.out.println(expLines.toString());
+        System.out.println(expLines.equals(lines));
         
 		System.out.println("Get intersection positions: ");
 		var intersectionPositions=busLineCompany.getIntersectionPositions();
@@ -84,7 +85,8 @@ public class busLineTester {
 		Map<String, List<Position>> expPositions = new HashMap<>();
 		expPositions.put("a",List.of(new Position2D(4, 4), new Position2D(7, 4), new Position2D(7, 2), new Position2D(4, 4)));
         expPositions.put("c", List.of(new Position2D(7, 4), new Position2D(7, 2)));
-        System.out.println(expPositions==intersectionPositions);
+        System.out.println(expPositions.toString());
+        System.out.println(expPositions.equals(intersectionPositions));
         
 		System.out.println("Get intersection with lines: ");
 		var intersectionsWithLines=busLineCompany.getIntersectionsWithLines();
@@ -92,7 +94,8 @@ public class busLineTester {
 		Map<String, List<String>> expInter = new HashMap<String, List<String>>();
 		expInter.put("a", List.of("a", "c", "c", "a"));
         expInter.put("c", List.of("a", "a"));
-        System.out.println(expInter==intersectionsWithLines);
+        System.out.println(expInter.toString());
+        System.out.println(expInter.equals(intersectionsWithLines));
 		
 		System.out.println("Get intersection of lines pair: ");
 		var intersectionOfLinesPair = busLineCompany.getIntersectionOfLinesPair();
@@ -107,6 +110,7 @@ public class busLineTester {
         expPair.put(new BusLine.LinesPair("b", "c"), new HashSet<>(List.of()));
         expPair.put(new BusLine.LinesPair("a", "c"), new HashSet<>(List.of(new Position2D(7, 2), new Position2D(7, 4))));
         expPair.put(new BusLine.LinesPair("c", "a"), new HashSet<>(List.of(new Position2D(7, 2), new Position2D(7, 4))));
-        System.out.println(expPair==intersectionOfLinesPair);
+        System.out.println(expPair.toString());
+        System.out.println(expPair.equals(intersectionOfLinesPair));
 	}
 }
