@@ -1,11 +1,13 @@
 package busLineTester;
 
+import java.util.Set;
+
 public class busLineTester {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("Creating Bus Company!");
-		CBusLineCompany busLineCompany = new CBusLineCompany();
+		BusLine busLineCompany = new BusLine();
 		//Tworzenie testowych linii oraz dodawanie segmentów
 		System.out.println("Creating Bus Line 1!");
 		busLineCompany.addBusLine("Linia 1",0,0,7,-1);
@@ -50,6 +52,10 @@ public class busLineTester {
 		System.out.println(busLineCompany.getLines().toString());
 		System.out.println("Get intersection positions: ");
 		System.out.println(busLineCompany.getIntersectionPositions().toString());
+		Set<String> keys = busLineCompany.getIntersectionPositions().keySet();
+		for (String key : keys) {
+			System.out.println(busLineCompany.getIntersectionPositions().get(key).size());
+		}
 		System.out.println("Get intersection with lines: ");
 		System.out.println(busLineCompany.getIntersectionsWithLines().toString());
 		System.out.println("Get intersection of lines pair: ");
